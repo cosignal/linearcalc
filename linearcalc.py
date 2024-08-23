@@ -9,43 +9,7 @@ from fractions import Fraction
 # at first that can just be a command line interface 
 # eventually there can be a UI
 
-# make matrix
-# TODO: figure out how to ensure properly formatted input
-""" def make_matrix_type1():
-# make matrix based on colon-separated rows
-# specifying number of rows/cols from user not necessary
-    while True:
-        print("separate entries by commas, and rows by semicolons")
-        rows = input().split(";")
-        row_count = len(rows) """
-
-def make_matrix_type2():
-    print("enter number of rows")
-    rows = int(input())
-    print("enter number of columns")
-    columns = int(input())
-    number_of_entries = rows*columns
-    matrix = np.empty((0,columns))
-
-    while True:
-        print("enter each entry, separated by spaces, in column/row order from left to right and top to bottom")
-        entries_input = input().split()
-        if len(entries_input) == number_of_entries:
-            break
-        else:
-            print("for a(n) " + str(rows) + "x" + str(columns) + " matrix, please provide " + str(number_of_entries) + " entries")
-    # what about other invalid inputs? (e.g. non-integers, other symbols)
-
-    entry_count = 0
-    for i in range(rows):
-        new_row = []
-        for j in range(columns):
-            new_row.append(int(entries_input[entry_count]))
-            entry_count += 1
-        matrix = np.vstack([matrix, new_row])
-
-    print(matrix)
-    return matrix
+# TODO: use this file for CLI code
 
 # matrix arithmetic
 
