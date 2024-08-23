@@ -154,8 +154,7 @@ def scale_matrix(scalar, matrix):
 # matrix reduction / RREF
 
 def divide_row(row, divisor):
-    # NOTE: does it matter that the division converts to float?
-    return scale_row((1/divisor), row)
+    return scale_row(Fraction(1, divisor), row)
 
 def swap_rows(matrix, row_A_index, row_B_index):
     if row_A_index == row_B_index:
