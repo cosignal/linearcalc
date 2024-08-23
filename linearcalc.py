@@ -167,103 +167,55 @@ def swap_rows(matrix, row_A_index, row_B_index):
     matrix[row_B_index] = row_A
     return matrix
 
-""" def add_row_multiple(matrix, row_A_index, row_B_index, scalar):
-    # row_B = scalar multiple of row_A added to row_B
-    # ADD CHECK: A and B index should be different
-    row_A = matrix[row_A_index]
-    row_B = matrix[row_B_index]
-    scaled_row = scale_row(scalar, row_A)
-    new_row_B = add_rows(scaled_row, row_B)
-    matrix[row_B_index] = new_row_B
-    return matrix """
-
 def add_row_multiple(row_A, row_B, scalar):
     return add_rows(scale_row(scalar, row_A), row_B)
 
+def floatify_matrix(matrix):
+    m = matrix.copy()
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            m[row][col] = float(m[row][col])
+    return m
+
+def pivot_row_idx(matrix, col_idx):
+    col = [row[col_idx] for row in matrix]
+    col_max = max(col, key=abs)
+    for row_idx in range(len(matrix)):
+        if ((matrix[row_idx][col_idx] == col_max) or
+            (matrix[row_idx][col_idx] == 1)):
+            return row_idx
+
+def is_zero_row(row):
+    return all((entry == 0) for entry in row)
+
 def rref(matrix):
-    # TODO: perform a check to see if matrix is already in rref (?)
-
+     # NOTE: assumes well-formed matrix
     m = matrix.copy()
-
-    for pivot_row in range(len(m)):
-        pivot_col = pivot_row # ? (just to make naming clear)
-        if m[pivot_row][pivot_col] != 1:
-            m[pivot_row] = divide_row(m[pivot_row], m[pivot_row][pivot_col])
-        for row in range(len(m)):
-            if row == pivot_row:
-                continue
-            scalar = -m[row][pivot_col]
-            m[row] = add_row_multiple(m[pivot_row], m[row], scalar)
-
-    return m
-
-def round_with_tolerance(value):
-    tol = 1e-10
-    if np.abs(value) < tol:
-        return 0
-    elif np.abs(1 - value) < tol:
-        return 1
-    else:
-        return value
-
-def rref2(matrix):
-    # NOTE: I've got something that kinda works but in some cases
-    # I'm running into what seem to be some kind of floating point 
-    # precision problems and this rounding isn't doing the trick...
-    m = matrix.copy()
-
-    for pivot_row in range(len(m)):
-        pivot_col = pivot_row
-        # this is maybe just a hacky patch for non-square matrices...
-        if pivot_row >= len(m[pivot_row]):
-            continue
-        if m[pivot_row][pivot_col] == 0:
-            m = swap_rows(m, pivot_row, pivot_row+1)
-        if m[pivot_row][pivot_col] != 1:
-            m[pivot_row] = divide_row(m[pivot_row], m[pivot_row][pivot_col])
-        for row in range(len(m)):
-            if row == pivot_row:
-                continue
-            if m[row][pivot_col] == 0:
-                continue
-            scalar = -m[row][pivot_col]
-            m[row] = add_row_multiple(m[pivot_row], m[row], scalar)
-
-    m = np.vectorize(round_with_tolerance)(m)
-    return m
-
-def rref3(matrix):
-    # learn what is different about this compared to yours in terms
-    # of what numpy enables, and keep it in numpy file 
-    # separate from your file of primitive array functions
-    mat = np.array(matrix, dtype=float)
-    rows, cols = mat.shape
     row_idx = 0
-    
-    for col_idx in range(cols):
-        # Find the pivot row
-        pivot_row = np.argmax(np.abs(mat[row_idx:, col_idx])) + row_idx
-        # if np.abs(mat[pivot_row, col_idx]) < tol:
-        #    continue
-        
-        # Swap the current row with the pivot row
-        mat[[row_idx, pivot_row]] = mat[[pivot_row, row_idx]]
-        
-        # Normalize the pivot row
-        mat[row_idx] = mat[row_idx] / mat[row_idx, col_idx]
-        
-        # Eliminate the current column entries above and below the pivot
-        for r in range(rows):
-            if r != row_idx:
-                mat[r] = mat[r] - mat[r, col_idx] * mat[row_idx]
-        
+    for col_idx in range(len(m[0])):
+
+        if (is_zero_row(m[row_idx])):
+            swap_rows(m, row_idx, row_idx+1)
+
+        pivot_row = pivot_row_idx(m, col_idx)
+
+        if (pivot_row != row_idx):
+            swap_rows(m, pivot_row, row_idx)
+
+        if (m[row_idx][col_idx] != 1):
+            m[row_idx] = divide_row(m[row_idx], m[row_idx][col_idx])
+
+        for row in range(len(m)):
+            if ((row != row_idx) and (m[row][col_idx] != 0)):
+                m[row] = add_row_multiple(m[row_idx], m[row], -m[row][col_idx])
+
         row_idx += 1
-        if row_idx >= rows:
+        if (((row_idx == len(m)-1) and
+             is_zero_row(m[row_idx])) or
+            (row_idx >= len(m))):
             break
-    
-    # Apply tolerance-based rounding
-    # mat = np.vectorize(round_with_tolerance)(mat, tol)
-    return mat
+
+    return m
 
 # determinant
 
