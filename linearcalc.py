@@ -1,4 +1,3 @@
-import numpy as np
 import math as math
 from fractions import Fraction
 
@@ -23,10 +22,9 @@ def add_rows(row_A, row_B):
     return sum
 
 def add_matrices(matrix_A, matrix_B):
-
     rows = len(matrix_A)
     columns = len(matrix_A[0])
-    sum = np.empty((0,columns))
+    sum = []
 
     if rows != len(matrix_B):
         print("matrices must have equal number of rows")
@@ -38,16 +36,16 @@ def add_matrices(matrix_A, matrix_B):
     for row in range(rows):
         new_row = []
         for column in range(columns):
-            new_row.append(matrix_A[row,column]+matrix_B[row,column])
-        sum = np.vstack([sum, new_row])
-    
+            new_row.append(matrix_A[row][column]+matrix_B[row][column])
+        sum.append(new_row)
+
     return sum
 
 def subtract_matrices(matrix_A, matrix_B):
-
+    # matrix_A - matrix_B
     rows = len(matrix_A)
     columns = len(matrix_A[0])
-    difference = np.empty((0,columns))
+    difference = []
 
     if rows != len(matrix_B):
         print("matrices must have equal number of rows")
@@ -59,13 +57,13 @@ def subtract_matrices(matrix_A, matrix_B):
     for row in range(rows):
         new_row = []
         for column in range(columns):
-            new_row.append(matrix_A[row,column]-matrix_B[row,column])
-        difference = np.vstack([difference, new_row])
+            new_row.append(matrix_A[row][column]-matrix_B[row][column])
+        difference.append(new_row)
     
     return difference
 
 def multiply_matrices(matrix_A, matrix_B):
-    product = np.empty((0, len(matrix_B[0])))
+    product = []
     if len(matrix_A[0]) != len(matrix_B):
         print("dimension mismatch")
         return
@@ -78,7 +76,7 @@ def multiply_matrices(matrix_A, matrix_B):
                 A_entry_index = B_row_index
                 sum += matrix_A[A_row][A_entry_index]*matrix_B[B_row_index][B_col]
             product_row.append(sum)
-        product = np.vstack([product, product_row])
+        product.append(product_row)
     return product
 
 def is_equal_matrix(matrix_A, matrix_B):
@@ -94,12 +92,12 @@ def is_equal_matrix(matrix_A, matrix_B):
 # matrix manipulation
 
 def transpose(matrix):
-    tpose = np.empty((0, len(matrix)))
+    tpose = []
     for column in range(len(matrix[0])):
         t_row = []
         for row in range(len(matrix)):
             t_row.append(matrix[row][column])
-        tpose = np.vstack([tpose, t_row])
+        tpose.append(t_row)
     return tpose
 
 def scale_row (scalar, row_vec):
@@ -109,10 +107,10 @@ def scale_row (scalar, row_vec):
     return scaled_row
 
 def scale_matrix(scalar, matrix):
-    scaled_matrix = np.empty((0,len(matrix[0])))
+    scaled_matrix = []
     for row in range(len(matrix)):
         scaled_row = scale_row(scalar, matrix[row])
-        scaled_matrix = np.vstack([scaled_matrix, scaled_row])
+        scaled_matrix.append(scaled_row)
     return scaled_matrix
 
 # matrix reduction / RREF
