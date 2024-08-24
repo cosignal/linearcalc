@@ -6,4 +6,13 @@ Author: James Hansen
 Created: 8/23/24
 """
 
-# TODO
+from inverse import augment_square, disaugment_square, identity
+from rref import rref
+
+# TODO: research what else could be relevant here
+
+def transition_matrix(basis_A, basis_B):
+    # returns the change-of-coordinates matrix from A to B
+    augmented = augment_square(basis_B, basis_A)
+    reduced = rref(augmented)
+    return disaugment_square(reduced)
