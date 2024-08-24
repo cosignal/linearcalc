@@ -12,6 +12,7 @@ from determinant import determinant
 from rref import rref
 
 def augment_square(matrix_A, matrix_B):
+    # augments matrix A with matrix B
     if (len(matrix_A) != len(matrix_A[0])) or (len(matrix_B) != len(matrix_B[0])):
         print("Both matrices must be square!")
         return

@@ -26,10 +26,10 @@ def swap_rows(matrix, row_A_index, row_B_index):
 def add_row_multiple(row_A, row_B, scalar):
     return add_rows(scale_row(scalar, row_A), row_B)
 
-def pivot_row_idx(matrix, col_idx):
+def pivot_row_idx(matrix, row_idx, col_idx):
     col = [row[col_idx] for row in matrix]
     col_max = max(col, key=abs)
-    for row_idx in range(len(matrix)):
+    for row_idx in range(row_idx, len(matrix)):
         if ((matrix[row_idx][col_idx] == col_max) or
             (matrix[row_idx][col_idx] == 1)):
             return row_idx
@@ -42,12 +42,10 @@ def rref(matrix):
     m = matrix.copy()
     row_idx = 0
     for col_idx in range(len(m[0])):
-
         if (is_zero_row(m[row_idx])):
             swap_rows(m, row_idx, row_idx+1)
 
-        pivot_row = pivot_row_idx(m, col_idx)
-
+        pivot_row = pivot_row_idx(m, row_idx, col_idx)
         if (pivot_row != row_idx):
             swap_rows(m, pivot_row, row_idx)
 
