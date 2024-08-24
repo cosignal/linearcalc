@@ -26,13 +26,6 @@ def swap_rows(matrix, row_A_index, row_B_index):
 def add_row_multiple(row_A, row_B, scalar):
     return add_rows(scale_row(scalar, row_A), row_B)
 
-def floatify_matrix(matrix):
-    m = matrix.copy()
-    for row in range(len(matrix)):
-        for col in range(len(matrix[0])):
-            m[row][col] = float(m[row][col])
-    return m
-
 def pivot_row_idx(matrix, col_idx):
     col = [row[col_idx] for row in matrix]
     col_max = max(col, key=abs)
