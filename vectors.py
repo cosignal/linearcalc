@@ -12,6 +12,9 @@ Created: 8/23/24
 
 import math
 
+def is_zero_vector(vector):
+    return all((entry == 0) for entry in vector)
+
 def scale_vector(scalar, vec):
     scaled_vec = []
     for i in range(len(vec)):
@@ -45,6 +48,10 @@ def dot_product(vec_A, vec_B):
     for i in range(len(vec_A)):
         prod += vec_A[i]*vec_B[i]
     return prod
+
+def cross_product(vec_A, vec_B):
+    # TODO
+    return
 
 def is_orthogonal_vec(vec_A, vec_B):
     return dot_product(vec_A, vec_B) == 0

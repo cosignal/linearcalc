@@ -7,6 +7,12 @@ Author: James Hansen
 Created: 8/23/24
 """
 
+def contains(arr, elt):
+    for entry in arr:
+        if (entry == elt):
+            return True
+    return False
+
 def floatify_matrix(matrix):
     m = matrix.copy()
     for row in range(len(matrix)):

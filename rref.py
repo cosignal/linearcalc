@@ -8,6 +8,19 @@ Created: 8/23/24
 
 from fractions import Fraction
 from matrix_arithmetic import scale_row, add_rows
+from vectors import is_zero_vector
+
+def pivot_cols(matrix):
+    # given a reduced matrix, return an array of indices of pivot columns
+    pivots = []
+    for row_idx in range(len(matrix)):
+        if (is_zero_vector(matrix[row_idx])):
+            break
+        for col_idx in range(len(matrix[row_idx])):
+            if (matrix[row_idx][col_idx] == 1):
+                pivots.append(col_idx)
+                break
+    return pivots
 
 def divide_row(row, divisor):
     return scale_row(Fraction(1, divisor), row)
@@ -34,15 +47,12 @@ def pivot_row_idx(matrix, row_idx, col_idx):
             (matrix[row_idx][col_idx] == 1)):
             return row_idx
 
-def is_zero_row(row):
-    return all((entry == 0) for entry in row)
-
 def rref(matrix):
      # NOTE: assumes well-formed matrix
     m = matrix.copy()
     row_idx = 0
     for col_idx in range(len(m[0])):
-        if (is_zero_row(m[row_idx])):
+        if (is_zero_vector(m[row_idx])):
             swap_rows(m, row_idx, row_idx+1)
 
         pivot_row = pivot_row_idx(m, row_idx, col_idx)
@@ -58,7 +68,7 @@ def rref(matrix):
 
         row_idx += 1
         if (((row_idx == len(m)-1) and
-             is_zero_row(m[row_idx])) or
+             is_zero_vector(m[row_idx])) or
             (row_idx >= len(m))):
             break
 

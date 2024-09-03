@@ -11,6 +11,12 @@ from rref import rref
 
 # TODO: research what else could be relevant here
 
+def basis(vectors):
+    # returns the basis of the space spanned by the set of given vectors
+    # TODO: linearly independent vecs that span the space in question
+    # multiple ways of doing this
+    return
+
 def transition_matrix(basis_A, basis_B):
     # returns the change-of-coordinates matrix from A to B
     augmented = augment_square(basis_B, basis_A)

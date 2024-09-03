@@ -105,3 +105,11 @@ def transpose(matrix):
             t_row.append(matrix[row][column])
         tpose.append(t_row)
     return tpose
+
+def trace(matrix):
+    trace = 0
+    for row in range(len(matrix)):
+        for col in range(len(matrix)):
+            if (row == col):
+                trace += matrix[row][col]
+    return trace

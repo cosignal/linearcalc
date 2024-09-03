@@ -44,3 +44,7 @@ def gram_schmidt(vectors):
             u[vec] = subtract_vectors(u[vec], proj)
         e.append(normalize(u[vec]))
     return e
+
+def orthogonal_complement(vectors):
+    # TODO
+    return
