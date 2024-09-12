@@ -34,7 +34,6 @@ def load_all_modules():
     print("All modules loaded and their contents added to the global namespace.")
     return loaded_modules
 
-
 # Function to reload a specific module
 def reload_module(module_name):
     if module_name in loaded_modules:

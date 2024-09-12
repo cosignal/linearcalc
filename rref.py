@@ -6,8 +6,7 @@ Author: James Hansen
 Created: 8/23/24
 """
 
-from fractions import Fraction
-from matrix_arithmetic import scale_row, add_rows
+from matrix_arithmetic import scale_row, divide_row, add_rows
 from vectors import is_zero_vector
 
 def pivots(matrix):
@@ -29,23 +28,6 @@ def pivot_cols(matrix):
                 pivots.append(col_idx)
                 break
     return pivots
-
-def free_cols(matrix, pivots):
-    # returns list of indices of columns corresponding to free variables
-    piv = pivots.copy()
-    free_cols = []
-    for col_idx in range(len(matrix[0])):
-        for pivot in range(len(piv)):
-            if (col_idx != piv[pivot][1]):
-                free_cols.append(col_idx)
-                piv.pop(pivot)
-                break
-            else:
-                break
-    return free_cols
-
-def divide_row(row, divisor):
-    return scale_row(Fraction(1, divisor), row)
 
 def swap_rows(matrix, row_A_index, row_B_index):
     if row_A_index == row_B_index:

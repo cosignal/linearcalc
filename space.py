@@ -8,9 +8,10 @@ Created: 8/23/24
 """
 
 from util import index_of_match
-from rref import rref, pivots, free_cols
+from rref import rref, pivots
 
 def initialize_null_space(cols, frees):
+    # initializes null space list based on columns corresponding to free variables
     frees_copy = frees.copy()
     null_space = [[0 for _ in range(cols)] for _ in range(len(frees_copy))]
 
@@ -24,9 +25,11 @@ def initialize_null_space(cols, frees):
     return null_space
 
 def null_space_reduced(matrix):
+    # null space for matrix in RREF
     cols = len(matrix[0]) # assumes well-formed matrix
     pivs = pivots(matrix)
-    frees = free_cols(matrix, pivs)
+    pivot_cols = [elt[1] for elt in pivs]
+    frees = [elt for elt in range(cols) if elt not in pivot_cols]
     null_space = initialize_null_space(cols, frees)
 
     for pivot in pivs:
@@ -44,6 +47,7 @@ def null_space_reduced(matrix):
     return null_space
 
 def null_space(matrix):
+    # returns list of vectors representing the null space of the matrix
     m = matrix.copy()
     return null_space_reduced(rref(m))
 

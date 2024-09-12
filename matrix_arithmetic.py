@@ -7,6 +7,8 @@ Author: James Hansen
 Created: 8/23/24
 """
 
+from fractions import Fraction
+
 def add_rows(row_A, row_B):
     if len(row_A) != len(row_B):
         print("rows must have equal length to add")
@@ -89,6 +91,9 @@ def scale_row (scalar, row_vec):
     for entry in range(len(row_vec)):
         scaled_row.append(scalar*row_vec[entry])
     return scaled_row
+
+def divide_row(row, divisor):
+    return scale_row(Fraction(1, divisor), row)
 
 def scale_matrix(scalar, matrix):
     scaled_matrix = []
