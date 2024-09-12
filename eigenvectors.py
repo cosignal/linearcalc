@@ -16,7 +16,7 @@ from copy import deepcopy
 
 def characteristic(matrix):
     # returns a characteristic matrix corresponding to the given matrix
-    m = matrix.copy()
+    m = deepcopy(matrix)
     
     if (len(m) != len(m[0])): # assumes well-formed input
         print("cannot find eigenvalues of non-square matrix")

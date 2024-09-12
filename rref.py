@@ -8,6 +8,7 @@ Created: 8/23/24
 
 from matrix_arithmetic import scale_row, divide_row, add_rows
 from vectors import is_zero_vector
+from copy import deepcopy
 
 def pivots(matrix):
     # given a reduced matrix, return a list of tuples of indices of pivots (row,col)
@@ -33,7 +34,7 @@ def swap_rows(matrix, row_A_index, row_B_index):
     if row_A_index == row_B_index:
         print("cannot swap row with itself")
         return
-    m = matrix.copy()
+    m = deepcopy(matrix)
     row_A = m[row_A_index]
     row_B = matrix[row_B_index]
     matrix[row_A_index] = row_B
@@ -53,7 +54,7 @@ def pivot_row_idx(matrix, row_idx, col_idx):
 
 def rref(matrix):
      # NOTE: assumes well-formed matrix
-    m = matrix.copy()
+    m = deepcopy(matrix)
     row_idx = 0
     for col_idx in range(len(m[0])):
         if (is_zero_vector(m[row_idx])):

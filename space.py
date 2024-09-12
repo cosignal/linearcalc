@@ -9,10 +9,11 @@ Created: 8/23/24
 
 from util import index_of_match
 from rref import rref, pivots
+from copy import deepcopy
 
 def initialize_null_space(cols, frees):
     # initializes null space list based on columns corresponding to free variables
-    frees_copy = frees.copy()
+    frees_copy = deepcopy(frees)
     null_space = [[0 for _ in range(cols)] for _ in range(len(frees_copy))]
 
     for row_idx in range(len(null_space)):
@@ -48,7 +49,7 @@ def null_space_reduced(matrix):
 
 def null_space(matrix):
     # returns list of vectors representing the null space of the matrix
-    m = matrix.copy()
+    m = deepcopy(matrix)
     return null_space_reduced(rref(m))
 
 def nullity_reduced(matrix):
